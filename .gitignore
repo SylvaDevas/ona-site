@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# big media – don’t track
+public/reels/
+public/src/reels/
+public/hero0.mp4
+# if you keep other large mp4s, list them here too or move them to reels/
