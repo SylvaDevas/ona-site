@@ -56,7 +56,7 @@ export default function Page() {
 <Section id="venues" kicker="Venues" title="Where to encounter ONA">
   <div className="grid gap-6 md:grid-cols-3">
     <VenueCard
-      title="Mystika Museum — Guest Gallery (Tulum)"
+      title="Mystika Museum - Guest Gallery (Tulum)"
       when="Guest Gallery · 2023"
       badge="Past"
       image="/venues/mystika.jpg"
@@ -65,14 +65,14 @@ export default function Page() {
     />
 
     <VenueCard
-      title="Pyramids of Chi — Bali"
+      title="Pyramids of Chi - Bali"
       when="Dec 2025 →"
       badge="Upcoming"
       image="/venues/pyramids-of-chi.jpg"
       href="https://www.pyramidsofchi.com/"
       hrefLabel=""
     />
-
+{/*.  
     <VenueCard
       title="Your venue?"
       when="Contact us"
@@ -80,7 +80,7 @@ export default function Page() {
       image="/venues/placeholder4.jpg"
       href="#contact"
       hrefLabel="Contact"
-    />
+    />*/}
   </div>
 
         {/* ===================== ONLINE PRESENCE ===================== */}
@@ -633,7 +633,7 @@ function ContactSection() {
           aria-label="Message"
           required
           className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:ring-2 focus:ring-yellow-300/40"
-          placeholder="Tell us about your venue or intention"
+          placeholder="Message"
         />
 
         <button
