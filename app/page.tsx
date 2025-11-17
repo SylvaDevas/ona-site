@@ -23,7 +23,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen text-neutral-200 bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(212,175,55,0.12),transparent),linear-gradient(to_bottom,var(--bg1),var(--bg2))] selection:bg-yellow-200/20 selection:text-yellow-50">
+    <div className="min-h-screen overflow-x-hidden text-neutral-200 bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(212,175,55,0.12),transparent),linear-gradient(to_bottom,var(--bg1),var(--bg2))] selection:bg-yellow-200/20 selection:text-yellow-50">
       <SiteHeader />
       <Hero prefersReduced={prefersReduced} />
 
@@ -125,7 +125,7 @@ export default function Page() {
             Every image and sequence is hand-crafted and filmed by the author. This art piece is not AI-generated.
           </p>
           <p className="text-neutral-400 text-sm font-bold text-white/95">
-            With contributions from collaborators in sound design, programming, and wood construction, each element of the experience was
+            With contributions from collaborators in sound design, philosophy, and woodcraft, each element of the experience was
             built to bridge the human and the sacred.
           </p>
         </div>
