@@ -1,20 +1,18 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Instagram, Youtube, Mail, MapPin, ExternalLink, Sparkle } from "lucide-react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, Instagram, Mail, MapPin, ExternalLink } from "lucide-react";
 
 
 /* ==========================================================
    ONA — The Initiation (Full Page, TSX)
-   - Vision uses 3 separate tiles on all breakpoints
-   - Hover: lift + glow + shimmer + image swap to Banner-Hover.jpg
-   - Tightened Vision spacing, left-aligned presentation
-   - Adds: OracleOrb surprise feature
+   - Valid HTML (no <p> inside <p>)
+   - Contact form posts to /api/contact with honeypot + time-trap
+   - Clean imports, no unused icons
    ========================================================== */
 
 export default function Page() {
-  // Coerce to boolean to avoid TS underline issues in some setups
   const prefersReduced = !!useReducedMotion();
 
   useEffect(() => {
@@ -30,34 +28,13 @@ export default function Page() {
       <Hero prefersReduced={prefersReduced} />
 
       {/* ===================== VISION ===================== */}
-{/* VISION */}
-<section id="vision" className="relative mx-auto max-w-7xl px-6 pt-20 md:pt-24 pb-14 md:pb-16">
-  <p className="text-xs uppercase tracking-[0.2em] text-yellow-300/80">The Vision</p>
-  <h2 className="mt-2 font-serif text-2xl md:text-4xl text-white/95">
-    A journey to remember...
-  </h2>
-{/* Vision copy — two sibling paragraphs, no nesting 
-<p className="mt-4 max-w-3xl text-base md:text-lg text-neutral-300 leading-snug">
-  ONA is born to plant a seed of consciousness,<br />
-  a mirror through which humanity can remember itself.
-</p>
-*/}
-<p className="mt-4 max-w-3xl text-base md:text-lg text-neutral-300 leading-snug">
-  An interactive journey that invites each player to rediscover the wonders of our world,
-  <span className="hidden sm:inline"><br /></span>
-  and to initiate a dialogue between the self and the divine.
-</p>
-
-
-
-  <VisionBanner />
-</section>
-
+      <section id="vision" className="relative mx-auto max-w-[84rem] px-6 pt-20 md:pt-6 pb-14 md:pb-16">
+        <VisionBanner />
+      </section>
 
       {/* ===================== EXPERIENCE ===================== */}
-      <Section id="experience" kicker="Play the journey" title="Interactive Art Experience">
+      <Section id="experience" kicker="Play The Experience" title="A Gamified Self-Healing Adventure">
         <GameBlock prefersReduced={prefersReduced} />
-        
         <PodSanctuary prefersReduced={prefersReduced} />
       </Section>
 
@@ -80,60 +57,56 @@ export default function Page() {
         <div className="grid gap-6 md:grid-cols-3">
           <VenueCard title="Mystika Museum — Guest Gallery (Tulum)" when="Guest Gallery · 2023" badge="Past" image="/venues/mystika.jpg" />
           <VenueCard title="Pyramids of Chi — Bali" when="Dec 2025 →" badge="Upcoming" image="/venues/pyramids-of-chi.jpg" />
-          <VenueCard title="Coming Soon" when="Announcing shortly" badge="Soon" image="/venues/placeholder.jpg" />
-
-
-        </div>
-{/* ===================== ONLINE PRESENCE ===================== */}
-<div className="mt-12">
-  <h3 className="text-sm uppercase tracking-[0.18em] text-yellow-300/80 mb-4">Online Presence</h3>
-
-  <div className="grid gap-6 md:grid-cols-3">
-    {[
-      {
-        title: "Kickstarter",
-        subtitle: "Past campaign",
-        image: "/venues/kickstarter.jpg",
-        href: "#",
-      },
-      {
-        title: "Steam",
-        subtitle: "Wishlist ONA",
-        image: "/venues/steam.jpg",
-        href: "#",
-      },
-    ].map(({ title, subtitle, image, href }) => (
-      <a
-        key={title}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group rounded-2xl border border-white/10 bg-white/5 overflow-hidden 
-                   transition-transform duration-300 hover:scale-[1.01] active:scale-[0.99]"
-      >
-        <div className="relative aspect-[16/9] w-full overflow-hidden">
-          <img
-            src={image}
-            alt={title}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          <VenueCard title="Your venue?" when="Contact us" badge="Soon" image="/venues/placeholder4.jpg" />
         </div>
 
-        <div className="p-5">
-          <p className="text-white/90 font-medium">{title}</p>
-          <p className="text-neutral-400 text-sm mt-0.5">{subtitle}</p>
+        {/* ===================== ONLINE PRESENCE ===================== */}
+        <div className="mt-12">
+          <h3 className="text-sm uppercase tracking-[0.18em] text-yellow-300/80 mb-4">Online Presence</h3>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              {
+                title: "Kickstarter",
+                subtitle: "Past campaign",
+                image: "/venues/kickstarter.jpg",
+                href: "#",
+              },
+              {
+                title: "Steam",
+                subtitle: "Wishlist ONA",
+                image: "/venues/steam.jpg",
+                href: "#",
+              },
+            ].map(({ title, subtitle, image, href }) => (
+              <a
+                key={title}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition-transform duration-300 hover:scale-[1.01] active:scale-[0.99]"
+              >
+                <div className="relative aspect-[16/9] w-full overflow-hidden">
+                  <img
+                    src={image}
+                    alt={title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+
+                <div className="p-5">
+                  <p className="text-white/90 font-medium">{title}</p>
+                  <p className="text-neutral-400 text-sm mt-0.5">{subtitle}</p>
+                </div>
+              </a>
+            ))}
+
+            <div className="hidden md:block" />
+          </div>
         </div>
-      </a>
-    ))}
-
-    {/* Optional empty block to balance the grid */}
-    <div className="hidden md:block" />
-  </div>
-</div>
-
       </Section>
 
       {/* ===================== CONTACT ===================== */}
@@ -141,97 +114,28 @@ export default function Page() {
 
       <ConclusionStrip videoSrc="/interludes/ona-parallax.mp4" poster="/interludes/ona-parallax.jpg" />
 
-      {/* ========= SURPRISE FEATURE: ORACLE ORB ================== 
-      <OracleOrb />*/}
-<section id="behind" className="relative mx-auto max-w-5xl px-6 py-20 md:py-28 text-center">
-  <h3 className="font-serif text-2xl md:text-3xl text-white/95 mb-4">Behind the Creation</h3>
-  <p className="max-w-2xl mx-auto text-neutral-300 leading-relaxed">
-    Conceived and directed by <span className="text-yellow-300">Sylva Devas</span>, ONA was filmed and
-    designed across sacred sites around the world. Blending digital craft, human emotion, and cinematic
-    presence into one contemplative journey.
-    <br/><br/>Every image and sequence is hand-crafted and filmed by a human, not generated by AI.
-  </p>
-  <p className="max-w-2xl mx-auto mt-4 text-neutral-400 text-sm">
-    With contributions from collaborators in sound design, programming, and sculpture, each element of the
-    experience was built to bridge the human and the sacred through light and form.
-  </p>
-</section>
+      <section id="behind" className="relative mx-auto max-w-5xl px-6 py-20 md:py-28 text-center">
+        <h3 className="font-serif text-2xl md:text-3xl text-white/95 mb-4">Behind the Creation</h3>
+        <div className="max-w-2xl mx-auto text-neutral-300 leading-relaxed space-y-4">
+          <p>
+            Conceived and directed by <span className="text-yellow-300">Sylva Devas</span>, ONA was filmed and designed across sacred sites
+            around the world. Blending digital craft, human emotion, and cinematic presence into one contemplative journey.
+          </p>
+              <p className="text-sm text-neutral-400 font-medium">
+            Every image and sequence is hand-crafted and filmed by the author. This art piece is not AI-generated.
+          </p>
+          <p className="text-neutral-400 text-sm font-bold text-white/95">
+            With contributions from collaborators in sound design, programming, and wood construction, each element of the experience was
+            built to bridge the human and the sacred.
+          </p>
+        </div>
+      </section>
 
       <SiteFooter />
     </div>
   );
 }
 
-/* ===================== OracleOrb Surprise Feature (NEW!) ===================== 
-const QUESTIONS = [
-  "Where does your journey begin?",
-  "What are you seeking right now?",
-  "Who is your truest self?",
-  "What does courage mean to you?",
-  "What do you wish to let go?",
-  "Which path calls you most?",
-  "What brings you into presence?",
-  "How do you embody humility?",
-  "Where do you sense the divine?",
-  "What awaits at your return?"
-];
-
-function OracleOrb() {
-  const question = QUESTIONS[
-    new Date().getDate() % QUESTIONS.length // statement changes daily
-  ];
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="fixed bottom-8 right-8 z-50">
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            key="card"
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.6 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="max-w-xs rounded-2xl shadow-2xl border border-yellow-100/20 bg-gradient-to-tr from-black/85 via-yellow-900/30 to-yellow-800/10 px-6 py-5 backdrop-blur-xl"
-            style={{ minWidth: 240 }}
-          >
-            <div className="flex items-center gap-2 mb-2 text-yellow-300 font-medium">
-              <Sparkle className="w-4 h-4 animate-spin-slow" /> Oracle of ONA
-            </div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="font-serif text-lg text-yellow-50 mb-3 animate-typewriter"
-            >
-              {question}
-            </motion.p>
-            <button
-              onClick={() => setOpen(false)}
-              className="text-xs text-yellow-200 hover:underline"
-            >
-              Close
-            </button>
-          </motion.div>
-        ) : (
-          <motion.button
-            key="orb"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.5 }}
-            onClick={() => setOpen(true)}
-            aria-label="Reveal Oracle's Question"
-            className="rounded-full shadow-lg bg-gradient-to-tr from-yellow-200/80 to-yellow-400/60 w-16 h-16 flex items-center justify-center ring-4 ring-yellow-100/40 hover:scale-105 transition transform"
-          >
-            <Sparkle className="w-8 h-8 text-yellow-900 animate-pulse drop-shadow" />
-          </motion.button>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-*/
 /* ===================== Layout bits ===================== */
 
 function SiteHeader() {
@@ -265,8 +169,8 @@ function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-10 text-xs text-neutral-400 flex flex-col md:flex-row items-center justify-between gap-4">
         <p>© {new Date().getFullYear()} ONA. A living journey by Sylva Devas.</p>
         <div className="flex items-center gap-6">
-          <a href="#" className="hover:text-white">Privacy</a>
-          <a href="#" className="hover:text-white">Press Kit</a>
+<a href="/privacy" className="hover:text-white">Privacy</a>
+          <a href="/press" className="hover:text-white">Press Kit</a>
         </div>
       </div>
     </footer>
@@ -282,36 +186,27 @@ function Hero({ prefersReduced }: { prefersReduced?: boolean }) {
       </video>
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 to-black/60" />
       <div className="relative z-10 mx-auto max-w-7xl px-6 h-full flex flex-col justify-end pb-20">
-        
-<motion.h1
-  initial={{ opacity: 0, y: prefersReduced ? 0 : 24 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 1.2 }}
-  className="font-serif text-5xl md:text-6xl text-white/95"
->
-Immersive Art Journey
-
+        <motion.h1
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2 }}
+          className="font-serif text-5xl md:text-6xl text-white/95"
+        >
+          Interactive Healing Journey
         </motion.h1>
-<motion.div
-  initial={{ opacity: 0, y: prefersReduced ? 0 : 24 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.15, duration: 1.2 }}
-  className="mt-5 max-w-4xl text-base md:text-lg text-neutral-300"
->
-  <p className="text-sm font-bold tracking-[0.2em] text-[#d5b241] leading-relaxed uppercase">
-    ONA — The Initiation
-  </p>
 
-  <p className="font-semibold text-white/95 mb-0 leading-snug">
-    Timeless message for the humans of now.
-  </p>
+        <motion.div
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 1.2 }}
+          className="mt-5 max-w-4xl text-base md:text-lg text-neutral-300 space-y-3"
+        >
+          <p className="text-sm font-bold tracking-[0.2em] text-[#d5b241] leading-relaxed uppercase">
+            ONA — The Initiation
+          </p>
+          <p>Enter an immersive art experience to remember what you are.</p>
+        </motion.div>
 
-  <p className="mt-0 leading-snug">
-    Art piece born to plant a seed of consciousness,
-    <span className="hidden lg:inline"><br /></span>
-    ONA is a mirror where you can remember who you are.
-  </p>
-</motion.div>
         <motion.div
           initial={{ opacity: 0, y: prefersReduced ? 0 : 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -325,8 +220,6 @@ Immersive Art Journey
             Host the Pod
           </a>
         </motion.div>
-
-
       </div>
     </section>
   );
@@ -360,39 +253,22 @@ function Section({ id, kicker, title, children }: { id: string; kicker: string; 
 
 /* ===================== Vision Banner ===================== */
 function VisionBanner() {
-  // Same left-aligned grid + tight gaps you liked
   return (
     <div className="mt-6 md:mt-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[0.25rem] md:gap-[0.5rem] justify-items-start">
-        <Plate
-          label="Immersive Installations"
-          defaultSrc="/vision/BanneC_A1.jpg"
-          hoverSrc="/vision/BanneC_A2.jpg"
-        />
-        <Plate
-          label="Transformative Journey"
-          defaultSrc="/vision/BanneC_B1.jpg"
-          hoverSrc="/vision/BanneC_B2.jpg"
-        />
-        <Plate
-          label="Interactive Contemplation"
-          defaultSrc="/vision/BanneC_C1.jpg"
-          hoverSrc="/vision/BanneC_C2.jpg"
-        />
+        <Plate label="Immersive Installations" defaultSrc="/vision/BanneC_A1.jpg" hoverSrc="/vision/BanneC_A2.jpg" />
+        <Plate label="Transformative Journey" defaultSrc="/vision/BanneC_B1.jpg" hoverSrc="/vision/BanneC_B2.jpg" />
+        <Plate label="Interactive Contemplation" defaultSrc="/vision/BanneC_C1.jpg" hoverSrc="/vision/BanneC_C2.jpg" />
       </div>
     </div>
   );
 }
 
-// Reusable plate with the exact sizing feel you had:
-// - Full width but capped, so it scales down smoothly.
-// - No fixed height; images keep their native aspect ratio.
-// - Hover: fade to the glyph version + subtle lift/glow.
 function Plate({
   label,
   defaultSrc,
   hoverSrc,
-  href = "#experience",
+  href = "#vision",
 }: {
   label: string;
   defaultSrc: string;
@@ -403,18 +279,8 @@ function Plate({
     <a
       href={href}
       aria-label={label}
-      className="
-        group relative
-        w-full
-        max-w-[520px]
-        md:max-w-[500px]
-        lg:max-w-[520px]
-        select-none
-        transition-transform duration-500
-        hover:-translate-y-[6px] hover:scale-[1.03]
-      "
+      className="group relative w-full max-w-[520px] md:max-w-[500px] lg:max-w-[520px] select-none transition-transform duration-500 hover:-translate-y-[6px] hover:scale-[1.03]"
     >
-      {/* Default image */}
       <img
         src={defaultSrc}
         alt={label}
@@ -423,8 +289,6 @@ function Plate({
         sizes="(min-width:1024px) 520px, (min-width:768px) 500px, 92vw"
         className="block w-full h-auto pointer-events-none transition-transform duration-500"
       />
-
-      {/* Hover overlay */}
       <img
         src={hoverSrc}
         alt=""
@@ -433,15 +297,12 @@ function Plate({
         decoding="async"
         className="pointer-events-none absolute inset-0 w-full h-auto opacity-0 transition-opacity duration-400 group-hover:opacity-100"
       />
-
-      {/* Subtle gold glow */}
       <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         <div className="absolute -inset-6 blur-2xl rounded-[2.5rem] bg-[radial-gradient(circle,rgba(212,175,55,0.12)_0%,transparent_70%)]" />
       </div>
     </a>
   );
 }
-
 
 /* ===================== Experience: Game ===================== */
 function GameBlock({ prefersReduced }: { prefersReduced?: boolean }) {
@@ -453,58 +314,51 @@ function GameBlock({ prefersReduced }: { prefersReduced?: boolean }) {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="mt-6 md:mt-10 grid gap-8 md:grid-cols-12 items-center"
     >
+      {/* Video section */}
       <div className="md:col-span-7 rounded-3xl overflow-hidden border border-white/10 bg-white/5">
         <div className="aspect-video w-full bg-black/60">
           <TrailerPlayer />
         </div>
       </div>
 
-<div className="md:col-span-5">
-  <h3 className="font-serif text-xl md:text-2xl text-white/95">ONA - The Initiation</h3>
-  <p className="mt-3 text-base md:text-lg text-neutral-300 leading-relaxed">
-
-
-
-    An immersive art journey created for humanity to remember itself.
-Blending cinematic explorations, choice, and presence, ONA invites you into a contemplative world where every question leads you closer to who you are.
-  </p>
-</div>
-
-
+      {/* Text section */}
+      <div className="md:col-span-5">
+        <h3 className="font-serif text-xl md:text-2xl text-white/95">ONA – The Initiation</h3>
+        <div className="mt-3 text-base md:text-lg text-neutral-300 leading-relaxed space-y-4">
+          <p className="text-white/95 font-semibold">
+            Explore your own path through a journey that takes you all over the world and into the depths of yourself.
+          </p>
+          <p>
+            The adventure will guide you through inner explorations, breathwork, and sacred discoveries. Each playthrough is unique, guided by the choices you make.
+          </p>
+          <p>Created for humanity to rediscover itself. ONA is an odyssey to remember what you are.</p>
+      
+        </div>
+      </div>
     </motion.div>
   );
 }
-
-
 
 /* ===================== The Pod — Sanctuary ===================== */
 function PodSanctuary({ prefersReduced }: { prefersReduced?: boolean }) {
   return (
     <section id="pod" className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
-      {/* Kicker 
-      <p className="text-xs uppercase tracking-[0.2em] text-yellow-300/80">Showcases</p>
-*/}    {/* Divider / mist */}
       <div className="relative mt-5 h-px bg-white/10">
         <div
           className="absolute inset-x-0 -top-[18px] h-10 pointer-events-none"
           style={{
-            background:
-              "radial-gradient(60% 100% at 50% 100%, rgba(212,175,55,0.18), rgba(212,175,55,0.0))",
+            background: "radial-gradient(60% 100% at 50% 100%, rgba(212,175,55,0.18), rgba(212,175,55,0.0))",
             filter: "blur(10px)",
             opacity: 0.4,
           }}
         />
       </div>
-      {/* Title */}<br/>
-      <h2 className="mt-2 font-serif text-2xl md:text-4xl text-white/95">Sanctuary for Exhibitions</h2>
+      <br />
+      <h2 className="mt-2 font-serif text-2xl md:text-4xl text-white/95">Explore ONA in a Sanctuary</h2>
 
-  
-
-      {/* Content */}
       <div className="mt-8 grid gap-10 md:grid-cols-12 items-center">
-        {/* Image / halo */}
+        {/* Image */}
         <div className="md:col-span-7 relative">
-          {/* soft aura */}
           <motion.div
             aria-hidden
             animate={{
@@ -513,10 +367,7 @@ function PodSanctuary({ prefersReduced }: { prefersReduced?: boolean }) {
             }}
             transition={{ duration: 6, repeat: prefersReduced ? 0 : Infinity, ease: "easeInOut" }}
             className="pointer-events-none absolute -inset-16 -z-10 rounded-full blur-3xl"
-            style={{
-              background:
-                "radial-gradient(45% 45% at 50% 60%, rgba(212,175,55,0.22) 0%, rgba(0,0,0,0) 70%)",
-            }}
+            style={{ background: "radial-gradient(45% 45% at 50% 60%, rgba(212,175,55,0.22) 0%, rgba(0,0,0,0) 70%)" }}
           />
           <motion.img
             src="/pod/PodImage1.png"
@@ -531,40 +382,35 @@ function PodSanctuary({ prefersReduced }: { prefersReduced?: boolean }) {
 
         {/* Copy */}
         <div className="md:col-span-5">
-           <h3 className="font-serif text-xl md:text-2xl text-white/95">Meet the Pod</h3>
-  
-  <p className="mt-3 text-base md:text-lg text-neutral-300 leading-relaxed">
-    A sanctuary of light and sound, handcrafted for presence.
-    Within its wooden shell, the digital and the sacred breathe as one.
-    What you choose becomes a reflection of what you are.
-  </p><br/>
-  
-<div className="space-y-3 mt-3 text-base md:text-lg text-neutral-300">
-  {[
-    "Curved screen with cinematic immersion",
-    "Warm acoustic chamber & silent ventilation",
-    "LED-lit symbols that respond to your path",
-    "Single-seat focus; built for contemplative flow",
-  ].map((text, index) => (
-    <div key={index} className="flex items-start gap-3 text-neutral-300">
-      <span className="mt-2 h-2 w-2 rounded-full bg-[#D4AF37] flex-shrink-0"></span>
-      <span>{text}</span>
-    </div>
-  ))}
-</div>
-<br/>
+          <h3 className="font-serif text-xl md:text-2xl text-white/95">Meet the Pod</h3>
+
+          <div className="mt-3 text-base md:text-lg text-neutral-300 leading-relaxed space-y-4">
+            <p className="text-white/95 font-semibold">An immersive cocoon for transformation, a sanctuary of meaning, handcrafted for presence.</p>
+            <p>
+              Experience ONA inside the Pod, a wooden sculpture that welcomes you for a 20-minute personal journey. The inner walls are engraved with mystical
+              symbols that respond to your choices throughout the experience.
+            </p>
+          </div>
+
+          <div className="space-y-3 mt-5 text-base md:text-lg text-neutral-300">
+            {[
+              "Curved screen with cinematic immersion",
+              "Warm acoustic chamber & silent ventilation",
+              "LED-lit symbols that respond to your path",
+              "Single-seat focus; built for contemplative flow",
+            ].map((text, i) => (
+              <div key={i} className="flex items-start gap-3 text-neutral-300">
+                <span className="mt-2 h-2 w-2 rounded-full bg-[#D4AF37] flex-shrink-0"></span>
+                <span>{text}</span>
+              </div>
+            ))}
+          </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href="#venues"
-              className="inline-flex items-center gap-2 rounded-xl bg-white/90 hover:bg-white px-4 py-2 text-black"
-            >
+            <a href="#venues" className="inline-flex items-center gap-2 rounded-xl bg-white/90 hover:bg-white px-4 py-2 text-black">
               Enter the Sanctuary
             </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-neutral-200 hover:bg-white/5"
-            >
+            <a href="#contact" className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-neutral-200 hover:bg-white/5">
               Host the Pod
             </a>
           </div>
@@ -660,46 +506,234 @@ function VenueCard({
     </div>
   );
 }
-
-/* ===================== Contact ===================== */
+/* ===================== CONTACT WITH WEB3FORMS (hardened) ===================== */
 function ContactSection() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+
   return (
     <Section id="contact" kicker="Connect" title="Invite ONA to your space">
-   <p className="max-w-2xl text-base md:text-lg text-neutral-300 leading-tight">
-  Curators, venues, and collaborators are welcome.<br/>Share your intention, let’s shape a resonant experience for your audience.
-</p>
+      <p className="max-w-2xl text-base md:text-lg text-neutral-300 leading-tight">
+        For collaborations, hosting, or inquiries. Visitors, curators, and venues are welcome.<br />
+        Share your intention, let’s shape a resonant experience for your audience.
+      </p>
 
-      <form className="mt-8 grid gap-4 md:max-w-xl" onSubmit={(e) => e.preventDefault()}>
+      <form
+        ref={formRef}
+        className="mt-8 grid gap-4 md:max-w-xl"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          if (!formRef.current) return;
+
+          // Build multipart/form-data from the form
+          const fd = new FormData(formRef.current);
+
+          // Basic client-side anti-spam checks (optional but nice)
+          // honeypot
+          if (fd.get("botcheck")) return;
+          // time trap: require >= 4s (optional – uncomment if you want)
+          // const startedAt = Number(fd.get("startedAt") || 0);
+          // if (!startedAt || Date.now() - startedAt < 4000) return;
+
+          setStatus("sending");
+          try {
+            const res = await fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: { Accept: "application/json" },
+              body: fd,
+            });
+            const json = await res.json();
+            if (json?.success) {
+              setStatus("ok");
+              formRef.current.reset();
+            } else {
+              setStatus("error");
+              console.error("Web3Forms error:", json);
+            }
+          } catch (err) {
+            console.error(err);
+            setStatus("error");
+          }
+        }}
+      >
+        {/* REQUIRED: your Web3Forms access key */}
+        <input type="hidden" name="access_key" value="92e13c92-717e-41fd-9b4a-70fd458a3e38" />
+
+        {/* Improve email sorting in your inbox */}
+        <input type="hidden" name="subject" value="ONA Website Contact" />
+        <input type="hidden" name="from_name" value="ONA Website" />
+
+        {/* Enable CAPTCHA in your Web3Forms dashboard and keep this flag */}
+        <input type="hidden" name="captcha" value="true" />
+
+        {/* Honeypot (bots usually fill hidden fields) */}
+        <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+
+        {/* Optional time trap; uncomment the hidden field and the check above */}
+        {/* <input type="hidden" name="startedAt" value={Date.now()} /> */}
+
         <input
+          name="name"
           aria-label="Your name"
-          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-300/40"
+          required
+          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:ring-2 focus:ring-yellow-300/40"
           placeholder="Your name"
         />
         <input
-          aria-label="Email or Instagram"
-          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-300/40"
-          placeholder="Email or Instagram"
+          type="email"
+          name="email"
+          aria-label="Email"
+          required
+          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:ring-2 focus:ring-yellow-300/40"
+          placeholder="Email"
         />
         <textarea
-          aria-label="Message"
+          name="message"
           rows={4}
-          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-300/40"
+          aria-label="Message"
+          required
+          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:ring-2 focus:ring-yellow-300/40"
           placeholder="Tell us about your venue or intention"
         />
-        <button className="justify-self-start inline-flex items-center gap-2 rounded-xl bg-white/90 hover:bg-white px-4 py-2 text-black">
-          Send <ArrowRight className="h-4 w-4" />
+
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="justify-self-start inline-flex items-center gap-2 rounded-xl bg-white/90 hover:bg-white px-4 py-2 text-black disabled:opacity-70"
+        >
+          {status === "sending" ? "Sending..." : "Send"} <ArrowRight className="h-4 w-4" />
         </button>
-        <p className="text-xs text-neutral-400">By sending, you agree to be contacted about ONA. No spam, no noise.</p>
+
+        {status === "ok" && (
+          <p className="text-sm text-green-400">Thanks. We received your message and will reply soon.</p>
+        )}
+   {status === "error" && (
+  <p className="text-sm text-red-400">
+    Couldn’t send right now. Please try again later or reach out through our <a className="underline" href="https://www.instagram.com/wizardmotion/">Instagram</a>.
+  </p>
+)}
+
+
+        <p className="text-xs text-neutral-400">
+          By sending, you agree to be contacted about ONA. No spam, no noise.
+        </p>
       </form>
+
       <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-neutral-300">
-        <a className="inline-flex items-center gap-2 hover:text-white" href="#"><Instagram className="h-4 w-4" /> @wizardmotion</a>
-      {/*}  <a className="inline-flex items-center gap-2 hover:text-white" href="#"><Youtube className="h-4 w-4" /> YouTube</a>*/}
-        <a className="inline-flex items-center gap-2 hover:text-white" href="#"><Mail className="h-4 w-4" /> hello@ona</a>
+        <a href="https://www.instagram.com/wizardmotion/" className="inline-flex items-center gap-2 hover:text-white">
+          <Instagram className="h-4 w-4" /> @wizardmotion
+        </a>
+    
+        
       </div>
     </Section>
   );
 }
 
+/* ===================== Contact (spam-filtered, working) ===================== 
+function ContactSection() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+
+  return (
+    <Section id="contact" kicker="Connect" title="Invite ONA to your space">
+      <div className="max-w-2xl text-base md:text-lg text-neutral-300 leading-tight space-y-3">
+        <p>For questions, collaborations, or hosting inquiries, visitors, curators, venues, and collaborators are welcome.</p>
+        <p>Share your intention and let’s shape a resonant experience for your audience.</p>
+      </div>
+
+      <form
+        ref={formRef}
+        className="mt-8 grid gap-4 md:max-w-xl"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          if (!formRef.current) return;
+
+          const fd = new FormData(formRef.current);
+          const body = {
+            name: String(fd.get("name") || ""),
+            email: String(fd.get("email") || ""),
+            message: String(fd.get("message") || ""),
+            website: String(fd.get("website") || ""),     // honeypot
+            startedAt: String(fd.get("startedAt") || ""), // time-trap
+          };
+
+          setStatus("sending");
+          try {
+            const res = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            if (res.ok) {
+              setStatus("ok");
+              formRef.current.reset();
+            } else {
+              setStatus("error");
+            }
+          } catch {
+            setStatus("error");
+          }
+        }}
+      >
+        <input
+          name="name"
+          aria-label="Your name"
+          required
+          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-300/40"
+          placeholder="Your name"
+        />
+        <input
+          type="email"
+          name="email"
+          aria-label="Email"
+          required
+          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-300/40"
+          placeholder="Email"
+        />
+        <textarea
+          name="message"
+          rows={4}
+          aria-label="Message"
+          required
+          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-300/40"
+          placeholder="Tell us about your venue or intention"
+        />
+
+  
+        <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
+        <input type="hidden" name="startedAt" value={Date.now()} />
+
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="justify-self-start inline-flex items-center gap-2 rounded-xl bg-white/90 hover:bg-white px-4 py-2 text-black disabled:opacity-70"
+        >
+          {status === "sending" ? "Sending..." : "Send"} <ArrowRight className="h-4 w-4" />
+        </button>
+
+        {status === "ok" && <p className="text-sm text-green-400">Thanks. We’ll be in touch soon.</p>}
+        {status === "error" && (
+          <p className="text-sm text-red-400">
+            Couldn’t send. Please email us at <a className="underline" href="mailto:sylvadevas@ona.now">sylvadevas@ona.now</a>.
+          </p>
+        )}
+
+        <p className="text-xs text-neutral-400">By sending, you agree to be contacted about ONA. No spam, no noise.</p>
+      </form>
+
+      <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-neutral-300">
+        <a className="inline-flex items-center gap-2 hover:text-white" href="https://www.instagram.com/wizardmotion/">
+          <Instagram className="h-4 w-4" /> @wizardmotion
+        </a>
+        <a className="inline-flex items-center gap-2 hover:text-white" href="mailto:sylvadevas@ona.now">
+          <Mail className="h-4 w-4" /> sylvadevas@ona.now
+        </a>
+      </div>
+    </Section>
+  );
+}
+*/
 /* ===================== Trailer Player ===================== */
 function TrailerPlayer() {
   const [playing, setPlaying] = useState(false);
@@ -707,13 +741,7 @@ function TrailerPlayer() {
     <div className="relative aspect-video overflow-hidden">
       {!playing ? (
         <button onClick={() => setPlaying(true)} className="group relative h-full w-full" aria-label="Play ONA trailer">
-          <img
-            src="/trailer/ona-trailer-thumb.jpg"
-            alt="ONA Trailer thumbnail"
-            className="h-full w-full object-cover opacity-90"
-            loading="lazy"
-            decoding="async"
-          />
+          <img src="/trailer/ona-trailer-thumb.jpg" alt="ONA Trailer thumbnail" className="h-full w-full object-cover opacity-90" loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition" />
           <div className="absolute inset-0 grid place-content-center">
             <div className="relative" style={{ width: 72, height: 72 }}>
@@ -754,23 +782,3 @@ function ConclusionStrip({
     </section>
   );
 }
-
-/* ===================== Extra OracleOrb CSS (add to global css/tailwind) ===================== */
-/* 
-@keyframes typewriter {
-  from { width: 0 }
-  to { width: 100% }
-}
-.animate-typewriter {
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typewriter 2.5s steps(40, end);
-}
-@keyframes spin-slow {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
-}
-.animate-spin-slow {
-  animation: spin-slow 4s linear infinite;
-}
-*/
