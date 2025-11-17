@@ -53,12 +53,35 @@ export default function Page() {
       </Section>
 
       {/* ===================== VENUES ===================== */}
-      <Section id="venues" kicker="Venues" title="Where to encounter ONA">
-        <div className="grid gap-6 md:grid-cols-3">
-          <VenueCard title="Mystika Museum — Guest Gallery (Tulum)" when="Guest Gallery · 2023" badge="Past" image="/venues/mystika.jpg" />
-          <VenueCard title="Pyramids of Chi — Bali" when="Dec 2025 →" badge="Upcoming" image="/venues/pyramids-of-chi.jpg" />
-          <VenueCard title="Your venue?" when="Contact us" badge="Soon" image="/venues/placeholder4.jpg" />
-        </div>
+<Section id="venues" kicker="Venues" title="Where to encounter ONA">
+  <div className="grid gap-6 md:grid-cols-3">
+    <VenueCard
+      title="Mystika Museum — Guest Gallery (Tulum)"
+      when="Guest Gallery · 2023"
+      badge="Past"
+      image="/venues/mystika.jpg"
+      href="https://mystikamuseum.com/"
+      hrefLabel=""
+    />
+
+    <VenueCard
+      title="Pyramids of Chi — Bali"
+      when="Dec 2025 →"
+      badge="Upcoming"
+      image="/venues/pyramids-of-chi.jpg"
+      href="https://www.pyramidsofchi.com/"
+      hrefLabel=""
+    />
+
+    <VenueCard
+      title="Your venue?"
+      when="Contact us"
+      badge="Soon"
+      image="/venues/placeholder4.jpg"
+      href="#contact"
+      hrefLabel="Contact"
+    />
+  </div>
 
         {/* ===================== ONLINE PRESENCE ===================== */}
         <div className="mt-12">
@@ -70,13 +93,13 @@ export default function Page() {
                 title: "Kickstarter",
                 subtitle: "Past campaign",
                 image: "/venues/kickstarter.jpg",
-                href: "#",
+                href: "https://www.kickstarter.com/projects/maeone/ona",
               },
               {
                 title: "Steam",
                 subtitle: "Wishlist ONA",
                 image: "/venues/steam.jpg",
-                href: "#",
+                href: "https://store.steampowered.com/app/1426930/ONA__A_Mystical_Art_Experience/",
               },
             ].map(({ title, subtitle, image, href }) => (
               <a
@@ -143,8 +166,12 @@ function SiteHeader() {
     <header className="sticky top-0 z-40 backdrop-blur-md bg-black/20 border-b border-white/5">
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-3 group" aria-label="Go to top">
-          <div className="h-8 w-8 rounded-full bg-[conic-gradient(from_90deg,rgba(212,175,55,.7),rgba(255,255,255,.2),rgba(212,175,55,.7))] ring-1 ring-white/20 shadow-lg shadow-yellow-400/10" />
-          <span className="font-serif tracking-wide text-sm md:text-base text-neutral-100 group-hover:text-white">
+<img
+  src="/branding/ona-logo-header.png"
+  alt="ONA Logo"
+  className="h-10 w-10 rounded-full shadow-lg shadow-yellow-400/10  object-cover"
+  draggable={false}
+/>          <span className="font-serif tracking-wide text-sm md:text-base text-neutral-100 group-hover:text-white">
             ONA — The Initiation
           </span>
         </a>
@@ -473,15 +500,25 @@ function VenueCard({
   hrefLabel?: string;
   badge?: string;
 }) {
+  const clickable = Boolean(href);
+  const Wrapper: React.ElementType = clickable ? "a" : "div";
+
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden flex flex-col">
+    <Wrapper
+      href={clickable ? href : undefined}
+      target={clickable ? "_blank" : undefined}
+      rel={clickable ? "noreferrer" : undefined}
+      className={`group rounded-2xl border border-white/10 bg-white/5 overflow-hidden flex flex-col transition-transform duration-300 ${
+        clickable ? "hover:scale-[1.02] cursor-pointer" : ""
+      }`}
+    >
       <div className="relative aspect-[16/9] w-full overflow-hidden">
         <img
           src={image}
           alt={title}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover opacity-90 transition-transform duration-500 hover:scale-[1.03]"
+          className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
         />
         {badge && (
           <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[10px] uppercase tracking-wide text-white/90 ring-1 ring-white/15">
@@ -489,6 +526,7 @@ function VenueCard({
           </span>
         )}
       </div>
+
       <div className="p-5 flex-1 flex items-start justify-between gap-4">
         <div>
           <p className="text-white/90 font-medium flex items-center gap-2">
@@ -497,15 +535,17 @@ function VenueCard({
           </p>
           <p className="text-neutral-400 text-sm mt-1">{when}</p>
         </div>
+
         {href && (
-          <a href={href} className="inline-flex items-center gap-1 text-sm text-yellow-300 hover:text-white">
+          <span className="inline-flex items-center gap-1 text-sm text-yellow-300 group-hover:text-white">
             {hrefLabel ?? "Open"} <ExternalLink className="h-4 w-4" />
-          </a>
+          </span>
         )}
       </div>
-    </div>
+    </Wrapper>
   );
 }
+
 /* ===================== CONTACT WITH WEB3FORMS (hardened) ===================== */
 function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
